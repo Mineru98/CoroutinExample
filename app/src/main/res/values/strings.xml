@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">CoroutinKotlin</string>
+    <string name="btn1">코루틴#1</string>
+    <string name="btn2">코루틴#2</string>
+    <string name="btn3">코루틴#3</string>
+    <string name="btn4">코루틴#4</string>
+    <string name="btn5">코루틴#5</string>
+    <string name="btn6">코루틴#6</string>
+    <string name="btn7">코루틴#7</string>
+    <string name="btn8">코루틴#8</string>
+    <string name="btn9">코루틴#9</string>
+    <string name="btn10">코루틴#10</string>
+    <string name="btn11">코루틴#11</string>
+    <string name="btn12">코루틴#12</string>
+    <string name="btn13">코루틴#13</string>
+    <string name="btn14">코루틴#14</string>
+    <string name="btn15">코루틴#15</string>
+    <string name="btn16">코루틴#16</string>
+    <string name="btn17">코루틴#17</string>
+    <string name="btn18">코루틴#18</string>
+    <string name="btn19">코루틴#19</string>
+    <string name="btn20">코루틴#20</string>
+</resources>

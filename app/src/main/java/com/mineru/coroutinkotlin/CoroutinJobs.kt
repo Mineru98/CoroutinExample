@@ -17,7 +17,7 @@ class CoroutinJobs {
                 }
                 jobs(1000L, 1)
             }
-            Log.d("Mineru", "Task From runBlocking#4")
+            Log.i("Mineru", "Task From runBlocking#4")
         }
 
         fun coroutineTest2() {
@@ -25,21 +25,21 @@ class CoroutinJobs {
                 val jobs = List(10) {
                     launch {
                         delay(1000L)
-                        Log.d("Mineru:", "Start Block")
+                        Log.i("Mineru:", "Start Block")
                     }
                 }
                 jobs.forEach { it.join() }
-                Log.d("Mineru:", "End RunBlock")
+                Log.i("Mineru:", "End RunBlock")
             }
 
-            Log.d("Mineru:", "End Function")
+            Log.i("Mineru:", "End Function")
 
             GlobalScope.launch {
                 delay(1000L)
-                Log.d("Mineru: ", "World!")
+                Log.i("Mineru: ", "World!")
             }
 
-            Log.d("Mineru: ", "Hello,")
+            Log.i("Mineru: ", "Hello,")
         }
 
         fun coroutineTest3() = runBlocking {
@@ -67,6 +67,52 @@ class CoroutinJobs {
             }
         }
 
+        fun namedRoutine(): Flow<Int> = flow {
+            log("Started named Routin flow")
+            for (i in 1..3)
+                emit(i)
+        }
+
+        fun switching(): Flow<Int> = flow {
+            // main 쓰레드가 아닌 디스패처 워커 쓰레드로 실행이 된다.
+            // main 쓰레드는 UI 작업을 하고 데이터 통신을 위한 코드를
+            // 디스패처 워커 쓰레드로 작업을 해주면 문제 없이 될것 같다.
+            for (i in 1..3) {
+                Thread.sleep(100)
+                log("Emitting $i")
+                emit(i)
+            }
+        }.flowOn(Dispatchers.Default)
+
+        fun produce_consume(): Flow<Int> = flow {
+            for(i in 1..3) {
+                delay(2000L)
+                Log.i("Mineru Emit", i.toString())
+                emit(i)
+            }
+        }
+
+        fun middleProcess(): Flow<Int> = flow {
+            for(i in 1..3) {
+                delay(100L)
+                emit(i)
+                Log.i("Mineru", "emit $i")
+            }
+        }
+
+        fun latestEmit(): Flow<Int> = flow {
+            for(i in 1..3) {
+                delay(1000L)
+                emit(i)
+            }
+        }
+
+        fun requestFlow(i: Int): Flow<String> = flow {
+            emit("$i: First")
+            delay(2000L)
+            emit("$i: Second")
+        }
+
         suspend fun transferValue(request: Int): String {
             delay(1000L)
             return "response $request"
@@ -74,11 +120,13 @@ class CoroutinJobs {
 
         suspend fun jobs(time: Long?, count: Int) {
             delay(time!!)
-            Log.d("Mineru", "Task From runBlocking#$count")
+            Log.i("Mineru", "Task From runBlocking#$count")
         }
 
         fun printlog(str: String?, count: Int) {
-            Log.d("Mineru", str!!+"$count")
+            Log.i("Mineru", str!!+"$count")
         }
+
+        fun log(msg: String) = println("[${Thread.currentThread().name}] $msg")
     }
 }

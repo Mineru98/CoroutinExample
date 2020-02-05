@@ -278,6 +278,17 @@ class MainActivity : AppCompatActivity() {
                     }
             }
             println("main2 end")
+
+            println("main3 Start")
+            startTime = System.currentTimeMillis()
+            runBlocking {
+                (1..3).asFlow().onEach {delay(1000L)}
+                    .flatMapLatest  { CoroutinJobs.requestFlow(it) }
+                    .collect {
+                        println("$it at ${System.currentTimeMillis() - startTime} ms from start")
+                    }
+            }
+            println("main3 end")
         }
     }
 }
